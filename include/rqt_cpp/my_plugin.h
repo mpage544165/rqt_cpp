@@ -10,6 +10,9 @@
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/Image.h>
 
+#include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
+
 namespace rqt_cpp
 {
 
@@ -28,6 +31,8 @@ class MyPlugin
 
     virtual void imageCallback(const sensor_msgs::Image::ConstPtr& msg);
 
+    // virtual void odomCallback(const nav_msgs::Odometry::ConstPtr& msg);
+
     // Comment in to signal that the plugin has a way to configure it
     // bool hasConfiguration() const;
     // void triggerConfiguration();
@@ -37,6 +42,8 @@ class MyPlugin
     QWidget* widget_;
 
     image_transport::Subscriber imSub;
+
+    // ros::Subscriber odomSub;
   };
 }  // namespace rqt_cpp
 #endif  // RQT_CPP_MY_PLUGIN_H

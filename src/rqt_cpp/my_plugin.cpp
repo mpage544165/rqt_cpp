@@ -6,6 +6,10 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
+
+
 namespace rqt_cpp
 {
 
@@ -35,6 +39,12 @@ namespace rqt_cpp
     image_transport::ImageTransport it(getNodeHandle());
     imSub = it.subscribe("/cvImage", 1, &MyPlugin::imageCallback, this);
     //imSub = it.subscribe("/ardrone/front/image_raw", 1, &MyPlugin::imageCallback, this);
+
+    // ros::NodeHandle nh;
+    // //rospy.Subscriber('/ground_truth/state', Odometry, self.print_ROSdata)
+    // ros::Subscriber odomSub = nh.subscribe("/ground_truth/state", 1, &MyPlugin::odomCallback, this);
+    // ROS_INFO("End of init.");
+
   }
 
   void MyPlugin::shutdownPlugin()
@@ -69,9 +79,44 @@ namespace rqt_cpp
     cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
     QImage image(cv_ptr->image.data, cv_ptr->image.cols, cv_ptr->image.rows, cv_ptr->image.step[0], QImage::Format_RGB888);
     ui_.label->setPixmap(QPixmap::fromImage(image));
+
+    ROS_INFO("End of imageCallback.");
   }
 
-}  // namespace rqt_example_cpp
+    
+  // //odomCallback
+  // void MyPlugin::odomCallback(const nav_msgs::Odometry::ConstPtr& msg) {
+  // 	ROS_INFO("Begin odomCallback");
+
+  //   // Camera position in map frame
+  //   double tx = msg->pose.pose.position.x;
+  //   double ty = msg->pose.pose.position.y;
+  //   double tz = msg->pose.pose.position.z;
+
+  //   // Orientation quaternion
+  //   // tf2::Quaternion q(
+  //   //     msg->pose.pose.orientation.x,
+  //   //     msg->pose.pose.orientation.y,
+  //   //     msg->pose.pose.orientation.z,
+  //   //     msg->pose.pose.orientation.w);
+
+  //   // 3x3 Rotation matrix from quaternion
+  //   // tf2::Matrix3x3 m(q);
+
+  //   // Roll Pitch and Yaw from rotation matrix
+  //   // double roll, pitch, yaw;
+  //   // m.getRPY(roll, pitch, yaw);
+
+  //   // Output the measure
+  //   ROS_INFO("Received odom in '%s' frame : X: %.2f Y: %.2f Z: %.2f",
+  //            msg->header.frame_id.c_str(),
+  //            tx, ty, tz);
+
+
+  // }
+
+}  // namespace rqt_cpp
+
 PLUGINLIB_DECLARE_CLASS(rqt_cpp, MyPlugin, rqt_cpp::MyPlugin, rqt_gui_cpp::Plugin)
 
 
