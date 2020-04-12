@@ -34,6 +34,7 @@ namespace rqt_cpp
 
     image_transport::ImageTransport it(getNodeHandle());
     imSub = it.subscribe("/cvImage", 1, &MyPlugin::imageCallback, this);
+    //imSub = it.subscribe("/ardrone/front/image_raw", 1, &MyPlugin::imageCallback, this);
   }
 
   void MyPlugin::shutdownPlugin()
