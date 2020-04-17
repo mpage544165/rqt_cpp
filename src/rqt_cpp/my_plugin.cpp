@@ -37,8 +37,8 @@ namespace rqt_cpp
     context.addWidget(widget_);
 
     image_transport::ImageTransport it(getNodeHandle());
-    imSub = it.subscribe("/cvImage", 1, &MyPlugin::imageCallback, this);
-    //imSub = it.subscribe("/ardrone/front/image_raw", 1, &MyPlugin::imageCallback, this);
+    //imSub = it.subscribe("/cvImage", 1, &MyPlugin::imageCallback, this);
+    imSub = it.subscribe("/ardrone/front/image_raw", 1, &MyPlugin::imageCallback, this);
 
     // ros::NodeHandle nh;
     // //rospy.Subscriber('/ground_truth/state', Odometry, self.print_ROSdata)
@@ -80,7 +80,7 @@ namespace rqt_cpp
     QImage image(cv_ptr->image.data, cv_ptr->image.cols, cv_ptr->image.rows, cv_ptr->image.step[0], QImage::Format_RGB888);
     ui_.label->setPixmap(QPixmap::fromImage(image));
 
-    ROS_INFO("End of imageCallback.");
+    //ROS_INFO("End of imageCallback.");
   }
 
     
